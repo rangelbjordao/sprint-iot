@@ -113,6 +113,8 @@ A exibição da recomendação já está prevista na interface do aplicativo, ma
 - Arquitetura da IA definida e documentada
 - Ponto de exibição da recomendação já previsto na interface
 
+---
+
 ## Links
 
 - [Vídeo no YouTube](https://youtu.be/fdbxqFJR6Ho)
