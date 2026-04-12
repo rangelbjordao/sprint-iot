@@ -99,9 +99,12 @@ A exibição da recomendação já está prevista na interface do aplicativo, ma
 
 ### Backend
 
-1. Acesse a pasta `backend`
-2. Configure as variáveis de ambiente e conexão com o banco
-3. Execute a aplicação Spring Boot
+A API está hospedada no Render e não é necessário executá-la localmente.
+
+A API está hospedada no plano gratuito do Render.  
+Por isso, após um período de inatividade, o serviço pode entrar em modo de “sleep”.
+
+Se houver demora no primeiro acesso, basta aguardar alguns instantes.
 
 ## Resultados Parciais
 
