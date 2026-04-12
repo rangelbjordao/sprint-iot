@@ -88,7 +88,6 @@ A exibição da recomendação já está prevista na interface do aplicativo, ma
 - Java
 - Oracle Database
 - Oracle APEX
-- Inteligência Artificial (modelo preditivo + LLM)
 
 ## Como Executar
 
