@@ -79,7 +79,6 @@ A exibição da recomendação já está prevista na interface do aplicativo, ma
 
 - `mobile/`: aplicação mobile desenvolvida em React Native
 - `backend/`: API desenvolvida em Spring Boot para integração com banco e serviços
-- `diagrama.png`: diagrama de integração entre aplicativo, backend, Oracle Database, APEX e IA
 
 ## Tecnologias Utilizadas
 
