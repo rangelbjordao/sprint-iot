@@ -75,6 +75,44 @@ A exibição da recomendação já está prevista na interface do aplicativo, ma
 
 ---
 
+## Estrutura do Projeto
+
+- `mobile/`: aplicação mobile desenvolvida em React Native
+- `backend/`: API desenvolvida em Spring Boot para integração com banco e serviços
+- `diagrama.png`: diagrama de integração entre aplicativo, backend, Oracle Database, APEX e IA
+
+## Tecnologias Utilizadas
+
+- React Native
+- TypeScript
+- Spring Boot
+- Java
+- Oracle Database
+- Oracle APEX
+- Inteligência Artificial (modelo preditivo + LLM)
+
+## Como Executar
+
+### Mobile
+
+1. Acesse a pasta `mobile`
+2. Instale as dependências
+3. Execute o projeto com Expo
+
+### Backend
+
+1. Acesse a pasta `backend`
+2. Configure as variáveis de ambiente e conexão com o banco
+3. Execute a aplicação Spring Boot
+
+## Resultados Parciais
+
+- Aplicativo mobile com registro de humor
+- Backend integrado ao banco de dados
+- Relatórios via Oracle APEX
+- Arquitetura da IA definida e documentada
+- Ponto de exibição da recomendação já previsto na interface
+
 ## Links
 
 - [Vídeo no YouTube](https://youtu.be/fdbxqFJR6Ho)
