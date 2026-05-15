@@ -4,6 +4,7 @@ import {
   RegistroHumorRequest,
   RegistroHumorResponse,
 } from "@/services/diarioService";
+import { notificarRelatorioAtualizado } from "@/services/notificationService";
 
 export function useDiario() {
   const queryClient = useQueryClient();
@@ -19,11 +20,17 @@ export function useDiario() {
 
   const criarMutation = useMutation({
     mutationFn: (dto: RegistroHumorRequest) => DiarioService.criar(dto),
-    onSuccess: (novoRegistro) => {
+    onSuccess: async (novoRegistro) => {
       queryClient.setQueryData<RegistroHumorResponse[]>(
         ["humor"],
         (old = []) => [novoRegistro, ...old],
       );
+
+      queryClient.invalidateQueries({
+        queryKey: ["relatorio-semanal"],
+      });
+
+      await notificarRelatorioAtualizado();
     },
   });
 
@@ -36,6 +43,10 @@ export function useDiario() {
           registro.id === registroAtualizado.id ? registroAtualizado : registro,
         ),
       );
+
+      queryClient.invalidateQueries({
+        queryKey: ["relatorio-semanal"],
+      });
     },
   });
 
@@ -62,6 +73,10 @@ export function useDiario() {
 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["humor"] });
+
+      queryClient.invalidateQueries({
+        queryKey: ["relatorio-semanal"],
+      });
     },
   });
 
