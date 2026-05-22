@@ -1,4 +1,4 @@
-# EmotiWave — Componente de Inteligência Artificial
+# EmotiWave — Sistema de Inteligência Artificial & IoB
 
 ## Integrantes
 
@@ -8,88 +8,167 @@
 
 ---
 
-## Sobre o projeto
+## 🎯 Objetivo da Entrega
 
-O **EmotiWave** é um aplicativo mobile de bem-estar digital que permite ao usuário registrar seu humor diariamente, visualizar relatórios via Oracle APEX e receber recomendações baseadas em inteligência artificial.
+Este projeto implementa o modelo de Inteligência Artificial para o sistema **EmotiWave**, integrando análise comportamental (IoB - Internet of Behavior) com modelos generativos (LLMs) diretamente ao ecossistema Oracle APEX e dispositivos móveis.
 
----
+O objetivo principal desta etapa foi desenvolver uma solução funcional capaz de:
 
-## Problema de IA
-
-O EmotiWave coleta dados de humor ao longo do tempo. O problema de IA consiste em:
-
-1. Identificar padrões no histórico emocional do usuário
-2. Detectar tendências (melhora, piora ou estabilidade)
-3. Gerar recomendações personalizadas em linguagem natural
+- Coletar dados comportamentais do usuário;
+- Processar informações emocionais utilizando IA generativa;
+- Integrar a inteligência artificial ao Oracle APEX;
+- Disponibilizar recomendações inteligentes em tempo real;
+- Validar o funcionamento da solução através de testes e evidências práticas.
 
 ---
 
-## Modelo de IA escolhido
+## 🧠 Arquitetura Técnica de IA
 
-A solução utiliza duas camadas complementares:
+A implementação foi otimizada para alta disponibilidade e integração entre múltiplas camadas do sistema.
 
-| Camada            | Modelo                     | Função                                  |
-| ----------------- | -------------------------- | --------------------------------------- |
-| Análise preditiva | Random Forest / Regressão  | Analisa padrões e tendência do humor    |
-| Recomendações     | LLM (GPT / Claude via API) | Gera recomendações em linguagem natural |
+### Modelo de Inteligência Artificial
 
-**Justificativa:**  
-Os dados de humor são estruturados (valores de 1 a 5 ao longo do tempo), o que permite o uso de modelos simples e eficientes como regressão ou classificação.  
-O LLM complementa a análise gerando uma resposta mais natural e compreensível para o usuário.
+Utilizamos o modelo generativo **Llama 3**, acessado através da API da plataforma **Groq**.
 
----
+A análise comportamental é realizada pelo próprio LLM a partir do histórico emocional enviado no prompt, permitindo identificar tendências, padrões e gerar recomendações personalizadas em linguagem natural.
 
-## Dados utilizados
+### Fluxo Técnico
 
-| Dado                  | Origem          | Formato              | Volume mínimo    |
-| --------------------- | --------------- | -------------------- | ---------------- |
-| Humor diário          | Registro no app | Inteiro (1–5) + data | 7 registros      |
-| Histórico consolidado | Oracle Database | Tabular / JSON       | 1 semana ou mais |
+- O aplicativo coleta registros emocionais do usuário;
+- Os dados são persistidos no Oracle Database via Spring Boot;
+- O backend processa os dados e envia o contexto ao modelo Llama 3;
+- A IA gera recomendações personalizadas;
+- O Oracle APEX consome a IA via REST utilizando PL/SQL;
+- As respostas são exibidas dinamicamente na interface administrativa e no aplicativo mobile.
 
 ---
 
-## Diagrama de integração
+## 🛠️ Implementação Técnica
 
-![Diagrama de integração EmotiWave](./diagrama.png)
+### 1. Backend e Serviço de IA
+
+Foi desenvolvido um serviço REST em Spring Boot responsável por:
+
+- Receber os dados emocionais do usuário;
+- Organizar o histórico de humor;
+- Construir o prompt contextual;
+- Consumir a API Groq;
+- Retornar recomendações em formato JSON.
+
+### 2. Integração Oracle APEX
+
+A integração com Oracle APEX foi implementada utilizando recursos nativos da plataforma.
+
+#### Tecnologias utilizadas na integração
+
+- `APEX_WEB_SERVICE`
+- `PL/SQL`
+- `APEX_JSON`
+- REST API
+
+### Funcionamento da integração
+
+O Oracle APEX realiza chamadas REST diretamente para o serviço de IA utilizando o procedimento:
+
+```sql
+apex_web_service.make_rest_request
+```
+
+O retorno JSON da IA é tratado via `APEX_JSON` e exibido dinamicamente na interface administrativa.
 
 ---
 
-## Fluxo de funcionamento da IA
+## 🧪 Testes e Evidências de Funcionamento
 
-1. O usuário registra seu humor no aplicativo
-2. Os dados são enviados para a API em Spring Boot
-3. As informações são armazenadas no Oracle Database
-4. O Oracle APEX consulta o histórico de humor (últimos dias)
-5. Os dados são enviados ao serviço de IA
-6. O modelo analisa padrões e identifica tendências
-7. O LLM gera uma recomendação textual
-8. A resposta retorna em formato JSON
-9. A recomendação é exibida no aplicativo
+Foram realizados testes completos para validar:
+
+- Comunicação REST entre Oracle APEX e serviço de IA;
+- Envio correto do payload JSON;
+- Processamento do prompt pelo modelo Llama 3;
+- Geração de recomendações contextualizadas;
+- Retorno correto da resposta em JSON;
+- Renderização dinâmica da resposta no Oracle APEX.
+
+### Evidências de Execução
+
+| Nota de Humor  | Evidência                |
+| :------------- | :----------------------- |
+| 1 - Muito Ruim | ![Teste 1](./docs/1.png) |
+| 2 - Ruim       | ![Teste 2](./docs/2.png) |
+| 3 - Regular    | ![Teste 3](./docs/3.png) |
+| 4 - Bom        | ![Teste 4](./docs/4.png) |
+| 5 - Excelente  | ![Teste 5](./docs/5.png) |
 
 ---
 
-## Observação
+## 🚀 Fluxo Integrado da Solução
 
-Nesta etapa do projeto, a inteligência artificial está **definida e documentada**, com integração planejada ao sistema.  
-A exibição da recomendação já está prevista na interface do aplicativo, mas ainda não está conectada ao modelo de IA.
+### 1. Captura de Dados (IoB)
+
+O usuário registra seu humor diariamente no aplicativo mobile.
+
+### 2. Persistência dos Dados
+
+As informações são armazenadas no Oracle Database através da API Spring Boot.
+
+### 3. Processamento Inteligente
+
+O backend envia o histórico emocional para o modelo Llama 3 via API Groq.
+
+### 4. Geração de Recomendações
+
+A IA interpreta os dados e gera recomendações personalizadas em linguagem natural.
+
+### 5. Consumo pelo Oracle APEX
+
+O painel administrativo realiza chamadas REST para validar e visualizar as respostas da IA diretamente no Oracle APEX.
+
+### 6. Exibição ao Usuário
+
+As recomendações são exibidas tanto no aplicativo mobile quanto na interface administrativa.
 
 ---
 
-## Estrutura do Projeto
+## 💻 Tecnologias Utilizadas
 
-- `mobile/`: aplicação mobile desenvolvida em React Native
-- `backend/`: API desenvolvida em Spring Boot para integração com banco e serviços
-
-## Tecnologias Utilizadas
+### Mobile
 
 - React Native
+- Expo
 - TypeScript
-- Spring Boot
+
+### Backend
+
 - Java
+- Spring Boot
+- REST API
+
+### Banco de Dados e Dashboard
+
 - Oracle Database
 - Oracle APEX
+- PL/SQL
 
-## Como Executar
+### Inteligência Artificial
+
+- Groq API
+- Llama 3
+- IA Generativa
+
+---
+
+## 📂 Organização do Repositório
+
+```text
+/mobile   -> Aplicação mobile em React Native
+/backend  -> API Spring Boot e integração com IA
+/docs     -> Evidências de testes e imagens
+README.md -> Documentação técnica do projeto
+```
+
+---
+
+## ▶️ Como Executar
 
 ### Mobile
 
@@ -97,25 +176,36 @@ A exibição da recomendação já está prevista na interface do aplicativo, ma
 2. Instale as dependências
 3. Execute o projeto com Expo
 
+```bash
+cd mobile
+npm install
+npx expo start
+```
+
 ### Backend
 
 A API está hospedada no Render e não é necessário executá-la localmente.
 
-A API está hospedada no plano gratuito do Render.  
+A API está hospedada no plano gratuito do Render.
 Por isso, após um período de inatividade, o serviço pode entrar em modo de “sleep”.
 
 Se houver demora no primeiro acesso, basta aguardar alguns instantes.
 
-## Resultados Parciais
+---
 
-- Aplicativo mobile com registro de humor
-- Backend integrado ao banco de dados
-- Relatórios via Oracle APEX
-- Arquitetura da IA definida e documentada
-- Ponto de exibição da recomendação já previsto na interface
+## 📊 Resultados Obtidos
+
+- Integração funcional entre IA e Oracle APEX;
+- Comunicação REST funcionando corretamente;
+- Recomendações inteligentes geradas em tempo real;
+- Processamento de dados emocionais via LLM;
+- Exibição dinâmica das respostas no sistema;
+- Integração completa entre Mobile, Backend, Oracle Database e IA.
 
 ---
 
-## Links
+## 🎥 Demonstração
 
-- [Vídeo no YouTube](https://youtu.be/fdbxqFJR6Ho)
+**Link do vídeo:**
+
+- [Vídeo Demonstração](https://youtu.be/aO21I3ZdE9s)
